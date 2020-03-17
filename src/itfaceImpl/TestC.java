@@ -20,7 +20,7 @@ public class TestC {
 		System.out.println(dog.getName());
 		
 		BiConsumer< Dog,String> studentNameSetter = Dog :: setName;
-		studentNameSetter.accept(dog, "小黑");
+		studentNameSetter.accept(dog, "小黄");
 		
 		System.out.println(dog.getName());
 		
