@@ -16,14 +16,15 @@ public class TestC {
 		//lambda表达式  setter方法引用
 		SetName lambda2 = Dog::setName;
 		lambda2.setDogName(dog, "小黑");
-		
 		System.out.println(dog.getName());
 		
 		BiConsumer< Dog,String> studentNameSetter = Dog :: setName;
 		studentNameSetter.accept(dog, "小黄");
-		
 		System.out.println(dog.getName());
 		
+		SetNameGeneric<Dog,String> setNameGeneric = Dog::setName;
+		setNameGeneric.setDogName(dog, "小花");
+		System.out.println(dog.getName());
 	}
 
 }
@@ -33,6 +34,10 @@ interface GetName{
 }
 interface SetName{ 
 	void setDogName(Dog dog,String name);
+}
+//该接口类似于BiConsumer接口
+interface SetNameGeneric<T,U>{
+	void setDogName(T t,U u);
 }
 
 
