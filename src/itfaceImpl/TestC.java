@@ -1,7 +1,12 @@
 package itfaceImpl;
 
 import java.util.function.BiConsumer;
-
+/**
+ * 方法引用：getter和setter
+ * 
+ * @author 41996
+ *
+ */
 public class TestC {
 
 	public static void main(String[] args) {
