@@ -1,0 +1,144 @@
+0.# 初始化git仓库
+git init
+##配置用户名密码（可以不带--global参数）
+git config --global user.name "zhangsan"
+git config --global user.emai "123@qq.com"
+
+1.# 添加指定文件到暂存区
+git add [file1] [file2] ...
+
+2.# 提交暂存区到仓库区
+git commit -m "备注...."
+
+3.# 显示当前分支的版本历史(文件名为可选输入);git log 命令可以显示所有提交过的版本信息
+git log 文件名
+# 显示commit历史，以及每次commit发生变更的文件
+git log --stat 文件名
+# 简易日志信息查看
+git log --pretty=oneline 文件名
+
+# 显示某个文件的版本历史，包括文件改名
+$ git log --follow [file]
+
+# 查看所有分支的所有操作记录（包括已经被删除的 commit 记录和 reset 的操作）
+git reflog --pretty=oneline
+
+
+4.# 回退历史
+git reset --hard HEAD^   回退到上一次提交
+git reset --hard HEAD~n  回退n次操作
+
+5.# 版本穿越
+查看历史记录的版本号(文件名为可选输入)：git reflog 文件名
+执行：git reset --hard 版本号   ，命令执行成功后会回到所选的那个版本
+
+6.# 恢复暂存区的指定文件到工作区 
+$ git checkout -- [file]
+# 恢复某个commit的指定文件到暂存区和工作区
+$ git checkout [commit] [file]
+
+未添加到暂存区的撤销使用: git checkout -- [file]   或全部撤销：git checkout -- .
+已经添加到暂存区但是没有commit的撤销:git reset HEAD [file] 或全部撤销: git reset HEAD
+
+commit之后想要回退，就使用reset命令
+
+
+7.# 删除某个文件
+如果误提交了一个文件，想要删除。
+先在workspace删除文件，然后git add 文件,最后git commit 文件 -m ""
+
+8.# 查看分支
+git branch -v
+
+9.# 新建分支
+git branch branchName
+
+10.# 切换分支
+git checkout branchName
+
+删除分支
+git branch -d <branchName> 
+
+11.# 合并分支
+需要先切换到主分支上git checkout master，然后执行git merge branchName。
+合并分支时，有可能会出现冲突，例如：
+$ git merge dev_20200311
+Auto-merging src/newFeature.txt
+CONFLICT (content): Merge conflict in src/newFeature.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+41996@zhanMK MINGW64 /e/git_pro/projectA/src (master|MERGING)
+这时就需要解决冲突后，在git add file，最后git commit -m ""
+
+
+
+12.# git diff命令
+
+工作目录 VS 暂存区
+git diff <filename>
+意义：查看文件再工作目录与暂存区的差别；如果还没add进暂存区，则查看文件自身修改前后的差别。
+也可查看和另一分支的区别: git diff <branch> <filename>
+
+暂存区 VS GIT仓库
+git diff --cached <filename>
+意义：查看已经add进暂存区但是尚未commit的内容同最新一次commit时的内容差异。
+也可以指定仓库版本：git diff --cached <commit> <filename>
+
+git diff --cached --name-only  :可以查看到暂存区与git仓库最新一次commit时的内容差异
+
+
+工作目录 VS GIT仓库
+git diff <commit> <filename>
+意义：查看工作目录同GIT仓库指定commit的内容差异。<commit> = HEAD时：查看工作目录与最近一次commit的内容差异
+
+Git仓库  VS Git仓库  （可以用来获取2个版本之间增量文件）
+git diff <老commit> <新commit> --name-only
+
+git diff <commit> <commit> --name-only --diff-filter=ACDMRTUXB*
+A:新增 C：复制 D:删除 M：修改 R:重命名 T:文件类型改变 U:未合并 X：未知
+
+注意:--name-only之间没有空格
+
+
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+与云仓库(github)进行互动
+1.增加远程仓库地址
+git remote add <远端代号(别名)>  <远端地址>
+*远端代号：是指远程链接的代号，一般直接用origin作代号，也可以自己定义
+*远程地址：默认远程链接的url
+例如：git remote add origin https://github.com/zhanmk/HelloGitHub.git
+
+
+2.上传本地仓库到远程仓库
+
+2.1将本地当前分支 推送到 与本地当前分支同名的远程分支上
+git push origin <本地分支名>
+例如：git push origin master
+2.2将本地当前分支 推送到 远程指定分支上（注意：pull是远程在前本地在后，push相反）：
+git push origin <本地分支名>:<远程分支名>
+
+3.克隆远端仓库到本地
+在硬盘的某个地方，右键Git Bash Here
+然后输入命令：git clone https://github.com/zhanmk/HelloGitHub.git 文件夹名字(如果不写默认就是HelloGitHub.git的前缀)
+
+
+4.从远端仓库更新代码到本地
+
+4.1将远程指定分支 拉取到 本地当前分支上：
+git pull origin <远程分支名>
+
+4.2将远程指定分支 拉取到 本地指定分支上：
+git pull origin <远程分支名>:<本地分支名>
+
+例如：git pull origin dev:dev   (如果本地没有dev分支，那么会默认在本地创建一个dev分支)
+
+
+
+
+
+
+
+
